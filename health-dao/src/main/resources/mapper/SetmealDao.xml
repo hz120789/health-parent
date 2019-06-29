@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.itheima.dao.SetmealDao">
+
+    <!--新增-->
+    <insert id="add" parameterType="com.itheima.pojo.Setmeal" useGeneratedKeys="true" keyProperty="id">
+        insert into t_setmeal
+        (code,name,sex,age,helpCode,price,remark,attention,img)
+        		values
+      		(#{code},#{name},#{sex},#{age},#{helpCode},#{price},#{remark},#{attention},#{img})
+    </insert>
+
+    <!--绑定套餐和检查组多对多关系-->
+    <insert id="setSetmealAndCheckGroup">
+        insert into t_setmeal_checkgroup
+        (setmeal_id,checkgroup_id)
+      			values
+      		(#{setmealId},#{checkgroupId})
+    </insert>
+
+    <select id="findPage" resultType="com.itheima.pojo.Setmeal">
+        select * from t_setmeal
+        <if test="queryString != null and queryString.length > 0">
+            where code = #{queryString} or name = #{queryString} or helpCode = #{queryString}
+        </if>
+    </select>
+
+</mapper>
